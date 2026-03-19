@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ReservationGuest extends Model
 {
     protected $fillable = [
-        'reservation_id',
-        'type',
-        'count',
+        'reservation_id', //// ID da reserva à qual o hóspede está associado
+        'type', //Tipo do hóspede.
+        'count', //Quantidade daquele tipo.
     ];
 
     protected function casts(): array
@@ -20,6 +20,10 @@ class ReservationGuest extends Model
         ];
     }
 
+    /**
+     * Relação Many-to-One.
+     * O hóspede pertence a uma única reserva.
+     */
     public function reservation(): BelongsTo
     {
         return $this->belongsTo(Reservation::class);

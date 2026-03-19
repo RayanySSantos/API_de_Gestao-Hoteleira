@@ -29,6 +29,10 @@ class Reservation extends Model
         'total_price',
     ];
 
+    /**
+     * Conversão automática de campos:
+     * datas da reserva e formatação financeira do valor total.
+     */
     protected function casts(): array
     {
         return [
@@ -39,26 +43,46 @@ class Reservation extends Model
         ];
     }
 
+    /**
+     * Relação Many-to-One.
+     * A reserva pertence a um único hotel.
+     */
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);
     }
 
+    /**
+     * Relação Many-to-One.
+     * A reserva pertence a um único quarto.
+     */
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
     }
 
+    /**
+     * Relação Many-to-One.
+     * A reserva está associada a uma tarifa.
+     */
     public function rate(): BelongsTo
     {
         return $this->belongsTo(Rate::class);
     }
 
+    /**
+     * Relação 1:N.
+     * Uma reserva pode possuir vários hóspedes.
+     */
     public function guests(): HasMany
     {
         return $this->hasMany(ReservationGuest::class);
     }
 
+    /**
+     * Relação 1:N.
+     * Uma reserva pode possuir vários registros de preço.
+     */
     public function prices(): HasMany
     {
         return $this->hasMany(ReservationPrice::class);

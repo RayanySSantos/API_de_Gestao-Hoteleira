@@ -21,6 +21,11 @@ class Rate extends Model
         'price',
     ];
 
+    /**
+     * Define a conversão automática de atributos.
+     * O campo price é formatado com duas casas decimais
+     * e o campo active é convertido para boolean.
+     */
     protected function casts(): array
     {
         return [
@@ -29,11 +34,19 @@ class Rate extends Model
         ];
     }
 
+    /**
+     * Relação Many-to-One.
+     * A tarifa pertence a um único hotel.
+     */
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);
     }
 
+    /**
+     * Relação 1:N.
+     * Uma tarifa pode estar associada a várias reservas.
+     */
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);

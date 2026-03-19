@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ReservationPrice extends Model
 {
     protected $fillable = [
-        'reservation_id',
-        'rate_id',
-        'price_date',
-        'amount',
+        'reservation_id', //Reserva vinculada
+        'rate_id', //Tarifa usada naquele dia
+        'price_date', //Data da diária
+        'amount', // Valor da diária
     ];
 
     protected function casts(): array
@@ -22,11 +22,19 @@ class ReservationPrice extends Model
         ];
     }
 
+    /**
+     * Relação Many-to-One.
+     * O registro de preço pertence a uma única reserva.
+     */
     public function reservation(): BelongsTo
     {
         return $this->belongsTo(Reservation::class);
     }
 
+    /**
+     * Relação Many-to-One.
+     * O registro de preço está associado a uma tarifa.
+     */
     public function rate(): BelongsTo
     {
         return $this->belongsTo(Rate::class);

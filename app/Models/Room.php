@@ -14,10 +14,10 @@ class Room extends Model
 
     protected $fillable = [
         'id',
-        'hotel_id',
+        'hotel_id', // ID do hotel ao qual o quarto pertence
         'name',
         'hotel_name',
-        'inventory_count',
+        'inventory_count', // Quantidade disponível desse tipo de quarto
     ];
 
     protected function casts(): array
@@ -27,11 +27,18 @@ class Room extends Model
         ];
     }
 
+    /**
+     * Relação Many-to-One.
+     * O quarto pertence a um único hotel.
+     */
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);
     }
 
+    /* Relação One-to-Many.
+     * Um quarto pode possuir várias reservas ao longo do tempo.
+     */
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);

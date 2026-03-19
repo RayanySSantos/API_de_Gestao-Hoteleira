@@ -13,10 +13,9 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * Representam os dados básicos do usuário no sistema.
      */
     protected $fillable = [
         'name',
@@ -25,25 +24,20 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Campos que devem ser ocultados quando o modelo for convertido
+     * para array ou JSON (ex: respostas de API).
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', // Oculta a senha por segurança
+        'remember_token', // Token utilizado para manter sessão ativa
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime', //transforma em data manipulável
+            'password' => 'hashed', //criptografa automaticamente da senha
         ];
     }
 }
