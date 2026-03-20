@@ -8,11 +8,14 @@ use Illuminate\Http\JsonResponse;
 
 class ImportController extends Controller
 {
+    /**
+     * Executa a importação de dados a partir de um arquivo XML.
+     */
     public function __invoke(XmlImportService $xmlImportService): JsonResponse
     {
         return response()->json([
-            'message' => 'XML data imported successfully.',
-            'data' => $xmlImportService->importAll(),
+            'message' => 'XML data imported successfully.', // Mensagem indicando sucesso na importação
+            'data' => $xmlImportService->importAll(), // Dados retornados pelo serviço após o processamento do XML
         ]);
     }
 }

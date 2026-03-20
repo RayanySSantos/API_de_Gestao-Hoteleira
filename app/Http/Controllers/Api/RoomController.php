@@ -11,6 +11,9 @@ use Illuminate\Http\Response;
 
 class RoomController extends Controller
 {
+    /**
+     * Lista todos os quartos com seus respectivos hotéis.
+     */
     public function index(): JsonResponse
     {
         return response()->json([
@@ -18,6 +21,9 @@ class RoomController extends Controller
         ]);
     }
 
+    /**
+     * Cria um novo quarto.
+     */
     public function store(StoreRoomRequest $request): JsonResponse
     {
         $room = Room::query()->create($request->validated())->load('hotel');
@@ -28,6 +34,9 @@ class RoomController extends Controller
         ], 201);
     }
 
+    /**
+     * Exibe um quarto específico com seus relacionamentos.
+     */
     public function show(Room $room): JsonResponse
     {
         return response()->json([
@@ -35,6 +44,9 @@ class RoomController extends Controller
         ]);
     }
 
+    /**
+     * Exibe um quarto específico com seus relacionamentos.
+     */
     public function update(UpdateRoomRequest $request, Room $room): JsonResponse
     {
         $room->update($request->validated());
@@ -45,6 +57,9 @@ class RoomController extends Controller
         ]);
     }
 
+    /**
+     * Remove um quarto do sistema.
+     */
     public function destroy(Room $room): Response
     {
         $room->delete();

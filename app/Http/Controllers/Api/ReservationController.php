@@ -13,6 +13,9 @@ use Illuminate\Http\Response;
 
 class ReservationController extends Controller
 {
+    /**
+     * Lista todas as reservas com seus relacionamentos.
+     */
     public function index(): JsonResponse
     {
         return response()->json([
@@ -23,11 +26,16 @@ class ReservationController extends Controller
         ]);
     }
 
+    /**
+     * Cria uma nova reserva.
+     */
     public function store(StoreReservationRequest $request, ReservationService $reservationService): JsonResponse
     {
         try {
+            // Cria a reserva utilizando o service (regra de negócio)
             $reservation = $reservationService->create($request->validated());
         } catch (RoomUnavailableException $exception) {
+            // Retorna erro caso o quarto não esteja disponível
             return response()->json([
                 'message' => $exception->getMessage(),
             ], 422);
@@ -39,6 +47,9 @@ class ReservationController extends Controller
         ], 201);
     }
 
+    /**
+     * Exibe uma reserva específica com seus relacionamentos.
+     */
     public function show(Reservation $reservation): JsonResponse
     {
         return response()->json([
@@ -46,14 +57,19 @@ class ReservationController extends Controller
         ]);
     }
 
+    /**
+     * Atualiza uma reserva existente.
+     */
     public function update(
         UpdateReservationRequest $request,
         Reservation $reservation,
         ReservationService $reservationService
     ): JsonResponse {
         try {
+            // Atualiza a reserva via service
             $reservation = $reservationService->update($reservation, $request->validated());
         } catch (RoomUnavailableException $exception) {
+            // Retorna erro caso o quarto não esteja disponível
             return response()->json([
                 'message' => $exception->getMessage(),
             ], 422);
@@ -65,10 +81,15 @@ class ReservationController extends Controller
         ]);
     }
 
+    /**
+     * Remove uma reserva do sistema.
+     */
     public function destroy(Reservation $reservation): Response
     {
+        // Deleta a reserva
         $reservation->delete();
 
+        // Retorna resposta sem conteúdo (padrão REST)
         return response()->noContent();
     }
 }
